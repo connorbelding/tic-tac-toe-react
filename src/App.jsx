@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./css/meyer-reset.css";
+import "./css/index.css"
 import ModeScreen from "./screens/mode-screen/mode-screen";
 
 function App() {
