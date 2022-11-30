@@ -12,17 +12,22 @@ export default function ModeScreen() {
   const soloRadioRef = useRef();
   const multiRadioRef = useRef();
 
-  useEffect(() => {
+  function handleSubmit(e) {
+    e.preventDefault();
     console.log(selectedMode);
-  }, [selectedMode]);
+  }
+
+  function handleInputChange(e) {
+    setSelectedMode(e.target.value);
+  }
 
   return (
     <Wrapper>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <CenteredMsg fontSize="1.45rem">Select mode</CenteredMsg>
-        <RadioBtnsWrapper>
-          <RadioBtnWrapper>
-            <label for="solo">Solo (VS CPU)</label>
+        <RadioButtonsWrapper>
+          <RadioButtonWrapper>
+            <label htmlFor="solo">Solo (VS CPU)</label>
             <input
               ref={soloRadioRef}
               type="radio"
@@ -30,14 +35,20 @@ export default function ModeScreen() {
               id="solo"
               value={modes.solo}
               checked={selectedMode === modes.solo}
-              onChange={() => setSelectedMode(soloRadioRef.current.value)}
+              onChange={handleInputChange}
             />
-            <button type="button" isSelected={selectedMode === modes.solo}>
+            <RadioButton
+              type="button"
+              isSelected={selectedMode === modes.solo}
+              onClick={() => {
+                soloRadioRef.current.click();
+              }}
+            >
               Solo
-            </button>
-          </RadioBtnWrapper>
-          <RadioBtnWrapper>
-            <label for="multi">Multiplayer</label>
+            </RadioButton>
+          </RadioButtonWrapper>
+          <RadioButtonWrapper>
+            <label htmlFor="multi">Multiplayer</label>
             <input
               ref={multiRadioRef}
               type="radio"
@@ -45,22 +56,28 @@ export default function ModeScreen() {
               id="multi"
               value={modes.multi}
               checked={selectedMode === modes.multi}
-              onChange={() => setSelectedMode(multiRadioRef.current.value)}
+              onChange={handleInputChange}
             />
-            <button type="button" isSelected={selectedMode === modes.multi}>
+            <RadioButton
+              type="button"
+              isSelected={selectedMode === modes.multi}
+              onClick={() => {
+                multiRadioRef.current.click();
+              }}
+            >
               Multi
-            </button>
-          </RadioBtnWrapper>
-        </RadioBtnsWrapper>
-        <SubmitBtn type="submit">Next</SubmitBtn>
+            </RadioButton>
+          </RadioButtonWrapper>
+        </RadioButtonsWrapper>
+        <SubmitButton type="submit">Next</SubmitButton>
       </Form>
     </Wrapper>
   );
 }
 
-const styledVariables = {
-  bgGradientOne: "rgba(56, 47, 88, 1)",
-  bgGradientTwo: "rgba(148, 141, 238, 1)",
+const colors = {
+  "radio-btn-bg": "rgb(32, 75, 192)",
+  "submit-btn-bg": "rgb(41, 41, 41)",
 };
 
 const Wrapper = styled.div`
@@ -76,49 +93,64 @@ const Wrapper = styled.div`
 const Form = styled.form`
   background: #fff;
   border-radius: 8px;
-  padding: 1.5rem;
+  padding: 2.2rem;
   box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.52);
 `;
 
 const CenteredMsg = styled.p`
   font-size: ${(props) => `${props.fontSize}`};
   text-align: center;
+  font-weight: 500;
 `;
 
-const RadioBtnsWrapper = styled.div`
+const RadioButtonsWrapper = styled.div`
   display: flex;
-  gap: 1rem;
-  margin: 0.5rem 0 0 0;
+  justify-content: center;
+  gap: 1.2rem;
+  margin: 0.75rem 0 0 0;
 `;
 
-const hiddenStyles = css`
-  height: 0;
-  width: 0;
-  position: absolute;
-  top: -99999px;
-  left: -99999px;
-`;
-
-const RadioBtnWrapper = styled.div`
+const RadioButtonWrapper = styled.div`
   & label,
   input {
-    ${hiddenStyles}
-  }
-  & button {
-    border: 2px solid rgba(0, 0, 0, 0.5);
-    color: rgba(0, 0, 0, 0.5);
-    padding: 0.4rem 0.7rem;
-    border-radius: 8px;
-    user-select: none;
-    font-weight: 500;
+    height: 0;
+    width: 0;
+    position: absolute;
+    top: -99999px;
+    left: -99999px;
   }
 `;
 
-const SubmitBtn = styled.button`
-  border: 2px solid rgba(0, 0, 0, 0.5);
-  color: rgba(0, 0, 0, 0.5);
+const RadioButton = styled.button`
   padding: 0.4rem 0.7rem;
   border-radius: 8px;
   user-select: none;
   font-weight: 500;
+  font-size: 1.15rem;
+  ${(props) =>
+    props.isSelected
+      ? css`
+          background: ${colors["radio-btn-bg"]};
+          color: rgba(255, 255, 255, 1);
+          border: 2px solid ${colors["radio-btn-bg"]};
+        `
+      : css`
+          background: transparent;
+          color: rgba(0, 0, 0, 0.5);
+          border: 2px solid rgba(0, 0, 0, 0.5);
+        `}
+`;
+
+const SubmitButton = styled.button`
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.5);
+  padding: 0.4rem 0;
+  width: 100%;
+  border-radius: 8px;
+  user-select: none;
+  font-weight: 500;
+  font-size: 1.15rem;
+  margin: 1rem 0 0 0;
+  background: ${colors["submit-btn-bg"]};
+  color: #fff;
 `;
