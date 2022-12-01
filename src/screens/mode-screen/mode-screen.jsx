@@ -9,9 +9,6 @@ const modes = {
 export default function ModeScreen() {
   const [selectedMode, setSelectedMode] = useState(modes.solo);
 
-  const soloRadioRef = useRef();
-  const multiRadioRef = useRef();
-
   function handleSubmit(e) {
     e.preventDefault();
     console.log(selectedMode);
@@ -26,52 +23,60 @@ export default function ModeScreen() {
       <Form onSubmit={handleSubmit}>
         <CenteredMsg fontSize="1.45rem">Select mode</CenteredMsg>
         <RadioButtonsWrapper>
-          <RadioButtonWrapper>
-            <label htmlFor="solo">Solo (VS CPU)</label>
-            <input
-              ref={soloRadioRef}
-              type="radio"
-              name="mode"
-              id="solo"
-              value={modes.solo}
-              checked={selectedMode === modes.solo}
-              onChange={handleInputChange}
-            />
-            <RadioButton
-              type="button"
-              isSelected={selectedMode === modes.solo}
-              onClick={() => {
-                soloRadioRef.current.click();
-              }}
-            >
-              Solo
-            </RadioButton>
-          </RadioButtonWrapper>
-          <RadioButtonWrapper>
-            <label htmlFor="multi">Multiplayer</label>
-            <input
-              ref={multiRadioRef}
-              type="radio"
-              name="mode"
-              id="multi"
-              value={modes.multi}
-              checked={selectedMode === modes.multi}
-              onChange={handleInputChange}
-            />
-            <RadioButton
-              type="button"
-              isSelected={selectedMode === modes.multi}
-              onClick={() => {
-                multiRadioRef.current.click();
-              }}
-            >
-              Multi
-            </RadioButton>
-          </RadioButtonWrapper>
+          <CustomButtonAccesible
+            mode={modes.solo}
+            groupName="mode"
+            customButtonText="Solo (VS AI)"
+            handleInputChange={handleInputChange}
+            isChecked={selectedMode === modes.solo}
+          />
+          <CustomButtonAccesible
+            mode={modes.multi}
+            groupName="mode"
+            customButtonText="Multiplayer"
+            handleInputChange={handleInputChange}
+            isChecked={selectedMode === modes.multi}
+          />
         </RadioButtonsWrapper>
         <SubmitButton type="submit">Next</SubmitButton>
       </Form>
     </Wrapper>
+  );
+}
+
+function CustomButtonAccesible({
+  groupName,
+  mode,
+  customButtonText,
+  handleInputChange,
+  isChecked,
+}) {
+  const inputRef = useRef();
+
+  function handleCustomButtonClick() {
+    inputRef.current.click();
+  }
+
+  return (
+    <RadioButtonWrapper>
+      <label htmlFor={mode}>{customButtonText}</label>
+      <input
+        ref={inputRef}
+        type="radio"
+        name={groupName}
+        id={mode}
+        value={mode}
+        checked={isChecked}
+        onChange={handleInputChange}
+      />
+      <RadioButton
+        type="button"
+        isSelected={isChecked}
+        onClick={handleCustomButtonClick}
+      >
+        {customButtonText}
+      </RadioButton>
+    </RadioButtonWrapper>
   );
 }
 
