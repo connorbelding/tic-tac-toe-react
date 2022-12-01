@@ -23,6 +23,13 @@ const CenteredMsg = styled.p`
   font-weight: 500;
 `;
 
+const RadioButtonsWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  margin: 0.75rem 0 0 0;
+`;
+
 const SubmitButton = styled.button`
   border: 2px solid rgba(0, 0, 0, 0.5);
   color: rgba(0, 0, 0, 0.5);
@@ -37,4 +44,10 @@ const SubmitButton = styled.button`
   color: #fff;
 `;
 
-export { FormScreenWrapper, Form, CenteredMsg, SubmitButton };
+export {
+  FormScreenWrapper,
+  Form,
+  CenteredMsg,
+  SubmitButton,
+  RadioButtonsWrapper,
+};
