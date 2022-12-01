@@ -9,4 +9,10 @@ const colors = {
   grey: "rgba(0, 0, 0, 0.5)",
 };
 
-export { modes, colors };
+const screens = {
+  mode: "mode screen",
+  name: "name screen",
+  game: "game screen",
+};
+
+export { modes, colors, screens };
