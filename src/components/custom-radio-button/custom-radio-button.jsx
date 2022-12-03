@@ -3,7 +3,8 @@ import { RadioButtonWrapper, RadioButton } from "./styles";
 
 export default function CustomRadioButton({
   groupName,
-  mode,
+  id,
+  value,
   customButtonText,
   handleInputChange,
   isChecked,
@@ -16,13 +17,13 @@ export default function CustomRadioButton({
 
   return (
     <RadioButtonWrapper>
-      <label htmlFor={mode}>{customButtonText}</label>
+      <label htmlFor={id}>{customButtonText}</label>
       <input
         ref={inputRef}
         type="radio"
         name={groupName}
-        id={mode}
-        value={mode}
+        id={id}
+        value={value}
         checked={isChecked}
         onChange={handleInputChange}
       />
