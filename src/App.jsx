@@ -6,11 +6,29 @@ import { screens } from "./constants";
 
 function App() {
   const [viewingScreen, setViewingScreen] = useState(screens.mode);
+  const [playMode, setPlayMode] = useState(null);
+  const [players, setPlayers] = useState(null);
 
-  if (viewingScreen === screens.name) return <NameScreen />;
-  if (viewingScreen === screens.game) return <GameScreen />;
+  if (viewingScreen === screens.name)
+    return (
+      <NameScreen
+        setPlayers={setPlayers}
+        playMode={playMode}
+        setViewingScreen={setViewingScreen}
+      />
+    );
+  if (viewingScreen === screens.game)
+    return (
+      <GameScreen
+        playMode={playMode}
+        players={players}
+        setViewingScreen={setViewingScreen}
+      />
+    );
 
-  return <ModeScreen />;
+  return (
+    <ModeScreen setPlayMode={setPlayMode} setViewingScreen={setViewingScreen} />
+  );
 }
 
 export default App;
