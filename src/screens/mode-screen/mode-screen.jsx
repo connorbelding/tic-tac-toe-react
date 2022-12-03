@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { modes } from "../../constants";
+import { modes, screens } from "../../constants";
 import { CustomRadioButton } from "../../components";
 import {
   FormScreenWrapper,
@@ -9,12 +9,13 @@ import {
   SubmitButton,
 } from "../../shared-styles/shared-styles";
 
-export default function ModeScreen() {
+export default function ModeScreen({ setPlayMode, setViewingScreen }) {
   const [selectedMode, setSelectedMode] = useState(modes.solo);
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(selectedMode);
+    setPlayMode(selectedMode);
+    setViewingScreen(screens.name);
   }
 
   function handleInputChange(e) {
@@ -27,14 +28,16 @@ export default function ModeScreen() {
         <CenteredMsg fontSize="1.45rem">Select mode</CenteredMsg>
         <RadioButtonsWrapper>
           <CustomRadioButton
-            mode={modes.solo}
+            id={modes.solo}
+            value={modes.solo}
             groupName="mode"
             customButtonText="Solo (VS AI)"
             handleInputChange={handleInputChange}
             isChecked={selectedMode === modes.solo}
           />
           <CustomRadioButton
-            mode={modes.multi}
+            id={modes.multi}
+            value={modes.multi}
             groupName="mode"
             customButtonText="Multiplayer"
             handleInputChange={handleInputChange}
