@@ -15,4 +15,9 @@ const screens = {
   game: "game screen",
 };
 
-export { modes, colors, screens };
+const marks = {
+  x: "x",
+  o: "o",
+};
+
+export { modes, colors, screens, marks };
