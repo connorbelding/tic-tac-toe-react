@@ -1,8 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
 import { marks, potentialWins } from "../../constants";
-import { Wrapper } from "./styles";
+import { Wrapper, Tile } from "./styles";
 
-export default function Board() {
+export default function Board({
+  setPlayerOneScore,
+  setPlayerTwoScore,
+  players,
+  playMode,
+}) {
   const [board, setBoard] = useState([
     ["", "", ""],
     ["", "", ""],
@@ -24,11 +29,22 @@ export default function Board() {
     const winCheck = checkForWin(board);
     if (winCheck) {
       setTimeout(() => {
-        window.alert(winCheck.mark);
+        const winningMark = winCheck.mark;
+
+        for (const player in players) {
+          if (players[player].mark === winningMark) {
+            if (player === "playerOne") {
+              setPlayerOneScore((prevState) => prevState + 1);
+            } else {
+              setPlayerTwoScore((prevState) => prevState + 1);
+            }
+          }
+        }
         resetGame();
       }, 0);
     }
-  }, [board, resetGame]);
+  }, [board, resetGame, players]);
+  //HERE
 
   useEffect(() => {
     const drawCheck = checkForDraw(board);
@@ -58,14 +74,15 @@ export default function Board() {
             );
           }
           return (
-            <button
+            <Tile
               key={`${rowIndex}${tileIndex}`}
               disabled={tile}
               onClick={handleClick}
               data-mark={tile}
+              mark={tile}
             >
               {tile}
-            </button>
+            </Tile>
           );
         });
       })}
