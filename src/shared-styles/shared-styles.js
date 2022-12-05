@@ -11,7 +11,7 @@ const FormScreenWrapper = styled.div`
 `;
 
 const Form = styled.form`
-  background: #fff;
+  background: ${colors.white};
   border-radius: 8px;
   padding: 2.2rem;
   box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.52);
@@ -41,7 +41,7 @@ const SubmitButton = styled.button`
   font-size: 1.15rem;
   margin: 1rem 0 0 0;
   background: ${colors.black};
-  color: #fff;
+  color: ${colors.white};
 `;
 
 export {
