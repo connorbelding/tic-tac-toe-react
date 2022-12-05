@@ -20,4 +20,15 @@ const marks = {
   o: "o",
 };
 
-export { modes, colors, screens, marks };
+const potentialWins = [
+  "0,0/0,1/0,2", //top horizontal
+  "0,0/1,0/2,0", //left vertical
+  "0,0/1,1/2,2", //right down diagonal
+  "0,1/1,1/2,1", //middle vertical
+  "1,0/1,1/1,2", //middle horizontal
+  "2,0/1,1/0,2", //top right diagonal
+  "0,2/1,2/2,2", //right vertical
+  "2,0/2,1/2,2", //bottom horizontal
+];
+
+export { modes, colors, screens, marks, potentialWins };
