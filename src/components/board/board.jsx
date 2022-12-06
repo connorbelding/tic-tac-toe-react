@@ -1,60 +1,74 @@
-import { useState, useEffect, useCallback } from "react";
-import { marks, potentialWins } from "../../constants";
+import React, { useState, useEffect, useCallback } from "react";
+import propTypes from "prop-types";
+import { marks } from "../../constants";
 import { Wrapper, Tile } from "./styles";
+import { checkForDraw, checkForWin, makeMove, determineMove } from "./utils";
 
-export default function Board({
-  setPlayerOneScore,
-  setPlayerTwoScore,
-  players,
-  playMode,
-}) {
+function Board({ setPlayerOneScore, setPlayerTwoScore, players, playMode }) {
   const [board, setBoard] = useState([
     ["", "", ""],
     ["", "", ""],
     ["", "", ""],
   ]);
-
   const [currentPlayer, setCurrentPlayer] = useState(marks.x);
-
-  const resetGame = useCallback(() => {
-    setBoard([
-      ["", "", ""],
-      ["", "", ""],
-      ["", "", ""],
-    ]);
-    setCurrentPlayer(marks.x);
-  }, [setCurrentPlayer]);
+  const [aiTurn, setAiTurn] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+  const playerOneMark = players.playerOne.mark;
+  const playerTwoMark = players.playerTwo.mark;
 
   useEffect(() => {
+    if (gameOver) {
+      console.log("gameOver", gameOver);
+    }
+  }, [gameOver]);
+
+  useEffect(() => {
+    if (gameOver) return;
     const winCheck = checkForWin(board);
     if (winCheck) {
-      setTimeout(() => {
-        const winningMark = winCheck.mark;
+      const winningMark = winCheck.mark;
 
-        for (const player in players) {
-          if (players[player].mark === winningMark) {
-            if (player === "playerOne") {
-              setPlayerOneScore((prevState) => prevState + 1);
-            } else {
-              setPlayerTwoScore((prevState) => prevState + 1);
-            }
+      for (const player in players) {
+        if (players[player].mark === winningMark) {
+          if (player === "playerOne") {
+            setPlayerOneScore((prevState) => prevState + 1);
+          } else {
+            setPlayerTwoScore((prevState) => prevState + 1);
           }
         }
-        resetGame();
-      }, 0);
+      }
+      console.warn("winning!!!!");
+      setGameOver(true);
     }
-  }, [board, resetGame, players]);
-  //HERE
+  }, [board, players, setPlayerOneScore, setPlayerTwoScore, gameOver]);
 
   useEffect(() => {
+    if (gameOver) return;
     const drawCheck = checkForDraw(board);
     if (drawCheck) {
-      setTimeout(() => {
-        window.alert("draw!!!!!!!!!");
-        resetGame();
-      }, 0);
+      console.warn("draw!!!!!!!!!");
+      setGameOver(true);
     }
-  }, [board, resetGame]);
+  }, [board, gameOver]);
+
+  useEffect(() => {
+    if (playMode === "solo" && !gameOver) {
+      if (currentPlayer === playerTwoMark) {
+        setAiTurn(true);
+      } else {
+        setAiTurn(false);
+      }
+    }
+  }, [playMode, currentPlayer, playerTwoMark, gameOver]);
+
+  useEffect(() => {
+    if (gameOver) return;
+    if (aiTurn) {
+      console.log("ai turn :)");
+    } else {
+      console.log("not ai turn :(");
+    }
+  }, [aiTurn, gameOver]);
 
   return (
     <Wrapper>
@@ -76,7 +90,7 @@ export default function Board({
           return (
             <Tile
               key={`${rowIndex}${tileIndex}`}
-              disabled={tile}
+              disabled={tile || gameOver}
               onClick={handleClick}
               data-mark={tile}
               mark={tile}
@@ -90,67 +104,11 @@ export default function Board({
   );
 }
 
-function checkForWin(board) {
-  let win = {};
+Board.propTypes = {
+  setPlayerOneScore: propTypes.func.isRequired,
+  setPlayerTwoScore: propTypes.func.isRequired,
+  playMode: propTypes.string.isRequired,
+  players: propTypes.object.isRequired,
+};
 
-  for (let i = 0; i < potentialWins.length; i++) {
-    const split = potentialWins[i].split("/");
-    const arr = [];
-    split.forEach((coords) => {
-      const [row, col] = coords.split(",");
-      arr.push(board[Number(row)][Number(col)]);
-    });
-    const [first, second, third] = arr;
-    if (first && second && third && first === second && second === third) {
-      win.coords = potentialWins[i];
-      win.mark = first;
-    }
-    if (win.coords && win.mark) return win;
-  }
-
-  return false;
-}
-
-function checkForDraw(board) {
-  function checkWinConAvailable(potentialWin) {
-    let mark;
-    let isAvailable = true;
-
-    const split = potentialWin.split("/");
-    const arr = [];
-    split.forEach((coords) => {
-      const [row, col] = coords.split(",");
-      arr.push(board[Number(row)][Number(col)]);
-    });
-    arr.forEach((tile) => {
-      if (tile && !mark) mark = tile;
-
-      if (tile !== mark && tile !== "") isAvailable = false;
-    });
-
-    return isAvailable;
-  }
-
-  let drawGame = true;
-
-  for (let i = 0; i < potentialWins.length; i++) {
-    let check = checkWinConAvailable(potentialWins[i]);
-    if (check) {
-      drawGame = false;
-      break;
-    }
-  }
-
-  return drawGame;
-}
-
-function makeMove({ board, playerMark, tileRow, tileCol }) {
-  return board.map((boardRow, boardRowIndex) => {
-    return boardRow.map((boardCol, boardColIndex) => {
-      if (boardRowIndex === tileRow && boardColIndex === tileCol) {
-        if (!boardCol) return playerMark;
-      }
-      return boardCol;
-    });
-  });
-}
+export default Board;
