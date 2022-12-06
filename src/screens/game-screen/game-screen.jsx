@@ -7,10 +7,6 @@ export default function GameScreen({ playMode, players, setViewingScreen }) {
   const [playerOneScore, setPlayerOneScore] = useState(0);
   const [playerTwoScore, setPlayerTwoScore] = useState(0);
 
-  useEffect(() => {
-    console.log({ players, playMode });
-  }, [players, playMode]);
-
   return (
     <Wrapper>
       <ScoresWrapper>
@@ -18,12 +14,12 @@ export default function GameScreen({ playMode, players, setViewingScreen }) {
           <div>
             {players.playerOne.name} ({players.playerOne.mark.toUpperCase()})
           </div>
-          <div>
-            {playerOneScore}
-          </div>
+          <div>{playerOneScore}</div>
         </div>
         <div>
-          <div>{players.playerTwo.name} ({players.playerTwo.mark.toUpperCase()})</div>
+          <div>
+            {players.playerTwo.name} ({players.playerTwo.mark.toUpperCase()})
+          </div>
           <div>{playerTwoScore}</div>
         </div>
       </ScoresWrapper>
