@@ -1,26 +1,25 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import propTypes from "prop-types";
 import { marks } from "../../constants";
 import { Wrapper, Tile } from "./styles";
 import { checkForDraw, checkForWin, makeMove, determineMove } from "./utils";
 
-function Board({ setPlayerOneScore, setPlayerTwoScore, players, playMode }) {
-  const [board, setBoard] = useState([
-    ["", "", ""],
-    ["", "", ""],
-    ["", "", ""],
-  ]);
-  const [currentPlayer, setCurrentPlayer] = useState(marks.x);
-  const [aiTurn, setAiTurn] = useState(false);
-  const [gameOver, setGameOver] = useState(false);
+function Board({
+  setPlayerOneScore,
+  setPlayerTwoScore,
+  players,
+  playMode,
+  gameOver,
+  setGameOver,
+  board,
+  setBoard,
+  currentPlayer,
+  setCurrentPlayer,
+  aiTurn,
+  setAiTurn,
+}) {
   const playerOneMark = players.playerOne.mark;
   const playerTwoMark = players.playerTwo.mark;
-
-  useEffect(() => {
-    if (gameOver) {
-      console.log("gameOver", gameOver);
-    }
-  }, [gameOver]);
 
   useEffect(() => {
     if (gameOver) return;
@@ -40,7 +39,14 @@ function Board({ setPlayerOneScore, setPlayerTwoScore, players, playMode }) {
       console.warn("winning!!!!");
       setGameOver(true);
     }
-  }, [board, players, setPlayerOneScore, setPlayerTwoScore, gameOver]);
+  }, [
+    board,
+    players,
+    setPlayerOneScore,
+    setPlayerTwoScore,
+    gameOver,
+    setGameOver,
+  ]);
 
   useEffect(() => {
     if (gameOver) return;
@@ -49,7 +55,7 @@ function Board({ setPlayerOneScore, setPlayerTwoScore, players, playMode }) {
       console.warn("draw!!!!!!!!!");
       setGameOver(true);
     }
-  }, [board, gameOver]);
+  }, [board, gameOver, setGameOver]);
 
   useEffect(() => {
     if (playMode === "solo" && !gameOver) {
@@ -59,16 +65,36 @@ function Board({ setPlayerOneScore, setPlayerTwoScore, players, playMode }) {
         setAiTurn(false);
       }
     }
-  }, [playMode, currentPlayer, playerTwoMark, gameOver]);
+  }, [playMode, currentPlayer, playerTwoMark, gameOver, setAiTurn]);
 
   useEffect(() => {
     if (gameOver) return;
+    let x;
     if (aiTurn) {
-      console.log("ai turn :)");
-    } else {
-      console.log("not ai turn :(");
+      x = setTimeout(() => {
+        setBoard((prevState) =>
+          determineMove({
+            board: prevState,
+            cpuMark: playerTwoMark,
+            playerMark: playerOneMark,
+          })
+        );
+        setCurrentPlayer((prevState) =>
+          prevState === marks.x ? marks.o : marks.x
+        );
+      }, 1000);
+      return () => {
+        clearTimeout(x);
+      };
     }
-  }, [aiTurn, gameOver]);
+  }, [
+    aiTurn,
+    gameOver,
+    playerTwoMark,
+    playerOneMark,
+    setBoard,
+    setCurrentPlayer,
+  ]);
 
   return (
     <Wrapper>
@@ -78,7 +104,7 @@ function Board({ setPlayerOneScore, setPlayerTwoScore, players, playMode }) {
             setBoard(
               makeMove({
                 board,
-                playerMark: currentPlayer,
+                mark: currentPlayer,
                 tileCol: tileIndex,
                 tileRow: rowIndex,
               })
@@ -90,7 +116,7 @@ function Board({ setPlayerOneScore, setPlayerTwoScore, players, playMode }) {
           return (
             <Tile
               key={`${rowIndex}${tileIndex}`}
-              disabled={tile || gameOver}
+              disabled={tile || gameOver || aiTurn}
               onClick={handleClick}
               data-mark={tile}
               mark={tile}
@@ -109,6 +135,14 @@ Board.propTypes = {
   setPlayerTwoScore: propTypes.func.isRequired,
   playMode: propTypes.string.isRequired,
   players: propTypes.object.isRequired,
+  gameOver: propTypes.bool.isRequired,
+  setGameOver: propTypes.func.isRequired,
+  board: propTypes.array.isRequired,
+  setBoard: propTypes.func.isRequired,
+  currentPlayer: propTypes.string.isRequired,
+  setCurrentPlayer: propTypes.func.isRequired,
+  aiTurn: propTypes.bool.isRequired,
+  setAiTurn: propTypes.func.isRequired,
 };
 
 export default Board;

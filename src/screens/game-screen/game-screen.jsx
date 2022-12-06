@@ -1,11 +1,26 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
+import propTypes from "prop-types";
 import { Board } from "../../components";
-import { Wrapper, ScoresWrapper, BoardWrapper, QuitWrapper } from "./styles";
-import { screens } from "../../constants";
+import {
+  Wrapper,
+  ScoresWrapper,
+  BoardWrapper,
+  QuitWrapper,
+  ReplayWindow,
+} from "./styles";
+import { screens, marks } from "../../constants";
 
-export default function GameScreen({ playMode, players, setViewingScreen }) {
+function GameScreen({ playMode, players, setViewingScreen }) {
   const [playerOneScore, setPlayerOneScore] = useState(0);
   const [playerTwoScore, setPlayerTwoScore] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
+  const [board, setBoard] = useState([
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""],
+  ]);
+  const [currentPlayer, setCurrentPlayer] = useState(marks.x);
+  const [aiTurn, setAiTurn] = useState(false);
 
   return (
     <Wrapper>
@@ -29,6 +44,14 @@ export default function GameScreen({ playMode, players, setViewingScreen }) {
           setPlayerTwoScore={setPlayerTwoScore}
           players={players}
           playMode={playMode}
+          gameOver={gameOver}
+          setGameOver={setGameOver}
+          board={board}
+          setBoard={setBoard}
+          currentPlayer={currentPlayer}
+          setCurrentPlayer={setCurrentPlayer}
+          aiTurn={aiTurn}
+          setAiTurn={setAiTurn}
         />
       </BoardWrapper>
       <QuitWrapper>
@@ -40,6 +63,44 @@ export default function GameScreen({ playMode, players, setViewingScreen }) {
           Quit
         </button>
       </QuitWrapper>
+      {gameOver && (
+        <ReplayWindow>
+          <div>Play again?</div>
+          <div>
+            <button
+              type="button"
+              onClick={() => {
+                setBoard([
+                  ["", "", ""],
+                  ["", "", ""],
+                  ["", "", ""],
+                ]);
+                setAiTurn(false);
+                setCurrentPlayer(marks.x);
+                setGameOver(false);
+              }}
+            >
+              Yes
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setViewingScreen(screens.mode);
+              }}
+            >
+              No
+            </button>
+          </div>
+        </ReplayWindow>
+      )}
     </Wrapper>
   );
 }
+
+GameScreen.propTypes = {
+  playMode: propTypes.string.isRequired,
+  players: propTypes.object.isRequired,
+  setViewingScreen: propTypes.func.isRequired,
+};
+
+export default GameScreen;
