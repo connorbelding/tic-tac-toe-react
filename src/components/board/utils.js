@@ -133,18 +133,35 @@ export function checkForDraw(board) {
 
 export function determineMove({ board, cpuMark, playerMark }) {
   const winMove = aiMoveCheck({ mode: "win", board, cpuMark, playerMark });
-  if (winMove) return winMove;
+  if (winMove)
+    return makeMove({
+      board,
+      mark: cpuMark,
+      tileRow: winMove.rowIndex,
+      tileCol: winMove.colIndex,
+    });
   const blockMove = aiMoveCheck({ mode: "block", board, cpuMark, playerMark });
-  if (blockMove) return blockMove;
+  if (blockMove)
+    return makeMove({
+      board,
+      mark: cpuMark,
+      tileRow: blockMove.rowIndex,
+      tileCol: blockMove.colIndex,
+    });
   const randomMove = pickRandomMove(board);
-  return randomMove;
+  return makeMove({
+    board,
+    mark: cpuMark,
+    tileRow: randomMove.rowIndex,
+    tileCol: randomMove.colIndex,
+  });
 }
 
-export function makeMove({ board, playerMark, tileRow, tileCol }) {
+export function makeMove({ board, mark, tileRow, tileCol }) {
   return board.map((boardRow, boardRowIndex) => {
     return boardRow.map((boardCol, boardColIndex) => {
       if (boardRowIndex === tileRow && boardColIndex === tileCol) {
-        if (!boardCol) return playerMark;
+        if (!boardCol) return mark;
       }
       return boardCol;
     });
