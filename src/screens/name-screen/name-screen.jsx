@@ -1,13 +1,15 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import propTypes from "prop-types";
 import { marks, modes, screens } from "../../constants";
 import {
   Form,
   FormScreenWrapper,
   RadioButtonsWrapper,
 } from "../../shared-styles/shared-styles";
+import { TextInputLabelWrapper, MessagesWrapper } from "./styles";
 import { CustomRadioButton } from "../../components";
 
-export default function NameScreen({ setPlayers, playMode, setViewingScreen }) {
+function NameScreen({ setPlayers, playMode, setViewingScreen }) {
   const [playerOneName, setPlayerOneName] = useState("");
   const [playerTwoName, setPlayerTwoName] = useState("");
   const [playerOneMark, setPlayerOneMark] = useState(marks.x);
@@ -57,7 +59,7 @@ export default function NameScreen({ setPlayers, playMode, setViewingScreen }) {
   return (
     <FormScreenWrapper>
       <Form onSubmit={handleSubmit}>
-        <div>
+        <TextInputLabelWrapper>
           <label htmlFor="p1-name">
             {playMode === modes.solo ? "Your name:" : "Player 1 name:"}
           </label>
@@ -66,16 +68,16 @@ export default function NameScreen({ setPlayers, playMode, setViewingScreen }) {
             value={playerOneName}
             onChange={(e) => setPlayerOneName(e.target.value)}
           />
-        </div>
+        </TextInputLabelWrapper>
         {playMode === modes.multi && (
-          <div>
+          <TextInputLabelWrapper>
             <label htmlFor="p2-name">Player 2 name:</label>
             <input
               id="p2-name"
               value={playerTwoName}
               onChange={(e) => setPlayerTwoName(e.target.value)}
             />
-          </div>
+          </TextInputLabelWrapper>
         )}
         <RadioButtonsWrapper>
           <CustomRadioButton
@@ -95,10 +97,20 @@ export default function NameScreen({ setPlayers, playMode, setViewingScreen }) {
             isChecked={playerOneMark === marks.o}
           />
         </RadioButtonsWrapper>
-        <div>{p1msg()}</div>
-        <div>{p2msg()}</div>
+        <MessagesWrapper>
+          <div>{p1msg()}</div>
+          <div>{p2msg()}</div>
+        </MessagesWrapper>
         <button type="submit">Play</button>
       </Form>
     </FormScreenWrapper>
   );
 }
+
+NameScreen.propTypes = {
+  setPlayers: propTypes.func.isRequired,
+  playMode: propTypes.string.isRequired,
+  setViewingScreen: propTypes.func.isRequired,
+};
+
+export default NameScreen;
