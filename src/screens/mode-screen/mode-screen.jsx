@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import propTypes from "prop-types";
 import { modes, screens } from "../../constants";
 import { CustomRadioButton } from "../../components";
 import {
@@ -9,7 +10,7 @@ import {
   SubmitButton,
 } from "../../shared-styles/shared-styles";
 
-export default function ModeScreen({ setPlayMode, setViewingScreen }) {
+function ModeScreen({ setPlayMode, setViewingScreen }) {
   const [selectedMode, setSelectedMode] = useState(modes.solo);
 
   function handleSubmit(e) {
@@ -49,3 +50,10 @@ export default function ModeScreen({ setPlayMode, setViewingScreen }) {
     </FormScreenWrapper>
   );
 }
+
+ModeScreen.propTypes = {
+  setPlayMode: propTypes.func.isRequired,
+  setViewingScreen: propTypes.func.isRequired,
+};
+
+export default ModeScreen;

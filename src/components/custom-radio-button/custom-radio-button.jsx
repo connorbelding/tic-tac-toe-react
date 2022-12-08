@@ -1,7 +1,8 @@
-import { useRef } from "react";
+import React, { useRef } from "react";
+import propTypes from "prop-types";
 import { RadioButtonWrapper, RadioButton } from "./styles";
 
-export default function CustomRadioButton({
+function CustomRadioButton({
   groupName,
   id,
   value,
@@ -37,3 +38,14 @@ export default function CustomRadioButton({
     </RadioButtonWrapper>
   );
 }
+
+CustomRadioButton.propTypes = {
+  groupName: propTypes.string.isRequired,
+  id: propTypes.string.isRequired,
+  value: propTypes.string.isRequired,
+  customButtonText: propTypes.string.isRequired,
+  handleInputChange: propTypes.func.isRequired,
+  isChecked: propTypes.bool.isRequired,
+};
+
+export default CustomRadioButton;
