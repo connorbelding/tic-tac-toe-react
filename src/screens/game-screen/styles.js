@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { colors } from "../../constants";
 
 export const Wrapper = styled.div`
   max-width: 1600px;
@@ -33,4 +34,28 @@ export const ReplayWindow = styled.form`
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
+`;
+
+export const ScoreCard = styled.div`
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: ${colors.white};
+  border-radius: 8px;
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.52);
+`;
+
+export const ScoreCardName = styled.div`
+  font-weight: 500;
+  font-size: 21px;
+`;
+export const ScoreCardNum = styled.div`
+  font-weight: 500;
+  font-size: 32px;
+  text-align: center;
+`;
+
+export const MarkText = styled.span`
+  color: ${(props) => (props.mark === "x" ? "red" : "blue")};
 `;

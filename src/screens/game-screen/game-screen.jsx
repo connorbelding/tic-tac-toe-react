@@ -7,6 +7,10 @@ import {
   BoardWrapper,
   QuitWrapper,
   ReplayWindow,
+  ScoreCard,
+  ScoreCardName,
+  ScoreCardNum,
+  MarkText,
 } from "./styles";
 import { screens, marks } from "../../constants";
 
@@ -25,18 +29,26 @@ function GameScreen({ playMode, players, setViewingScreen }) {
   return (
     <Wrapper>
       <ScoresWrapper>
-        <div>
-          <div>
-            {players.playerOne.name} ({players.playerOne.mark.toUpperCase()})
-          </div>
-          <div>{playerOneScore}</div>
-        </div>
-        <div>
-          <div>
-            {players.playerTwo.name} ({players.playerTwo.mark.toUpperCase()})
-          </div>
-          <div>{playerTwoScore}</div>
-        </div>
+        <ScoreCard>
+          <ScoreCardName>
+            {players.playerOne.name} (
+            <MarkText mark={players.playerOne.mark}>
+              {players.playerOne.mark.toUpperCase()}
+            </MarkText>
+            )
+          </ScoreCardName>
+          <ScoreCardNum>{playerOneScore}</ScoreCardNum>
+        </ScoreCard>
+        <ScoreCard>
+          <ScoreCardName>
+            {players.playerTwo.name} (
+            <MarkText mark={players.playerTwo.mark}>
+              {players.playerTwo.mark.toUpperCase()}
+            </MarkText>
+            )
+          </ScoreCardName>
+          <ScoreCardNum>{playerTwoScore}</ScoreCardNum>
+        </ScoreCard>
       </ScoresWrapper>
       <BoardWrapper>
         <Board
