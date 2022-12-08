@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./css/meyer-reset.css";
 import "./css/index.css";
 import { ModeScreen, NameScreen, GameScreen } from "./screens";
