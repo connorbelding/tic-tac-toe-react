@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { colors } from "../constants";
+import styled, { css } from "styled-components";
+import { colors, screens } from "../constants";
 
 const FormScreenWrapper = styled.div`
   max-width: 1600px;
@@ -25,12 +25,21 @@ const CenteredMsg = styled.p`
 
 const RadioButtonsWrapper = styled.div`
   display: flex;
-  justify-content: center;
-  gap: 1.2rem;
+  ${(props) => {
+    if (props.screen === screens.mode)
+      return css`
+        justify-content: center;
+        gap: 1.2rem;
+      `;
+    if (props.screen == screens.name)
+      return css`
+        justify-content: space-around;
+      `;
+  }}
   margin: 0.75rem 0 0 0;
 `;
 
-const SubmitButton = styled.button`
+const BigButton = styled.button`
   border: 2px solid rgba(0, 0, 0, 0.5);
   color: rgba(0, 0, 0, 0.5);
   padding: 0.4rem 0;
@@ -44,10 +53,4 @@ const SubmitButton = styled.button`
   color: ${colors.white};
 `;
 
-export {
-  FormScreenWrapper,
-  Form,
-  CenteredMsg,
-  SubmitButton,
-  RadioButtonsWrapper,
-};
+export { FormScreenWrapper, Form, CenteredMsg, BigButton, RadioButtonsWrapper };
