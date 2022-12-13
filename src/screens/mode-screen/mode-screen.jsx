@@ -7,7 +7,7 @@ import {
   Form,
   CenteredMsg,
   RadioButtonsWrapper,
-  SubmitButton,
+  BigButton,
 } from "../../shared-styles/shared-styles";
 
 function ModeScreen({ setPlayMode, setViewingScreen }) {
@@ -27,7 +27,7 @@ function ModeScreen({ setPlayMode, setViewingScreen }) {
     <FormScreenWrapper>
       <Form onSubmit={handleSubmit}>
         <CenteredMsg fontSize="1.45rem">Select mode</CenteredMsg>
-        <RadioButtonsWrapper>
+        <RadioButtonsWrapper screen={screens.mode}>
           <CustomRadioButton
             id={modes.solo}
             value={modes.solo}
@@ -45,7 +45,7 @@ function ModeScreen({ setPlayMode, setViewingScreen }) {
             isChecked={selectedMode === modes.multi}
           />
         </RadioButtonsWrapper>
-        <SubmitButton type="submit">Next</SubmitButton>
+        <BigButton type="submit">Next</BigButton>
       </Form>
     </FormScreenWrapper>
   );
