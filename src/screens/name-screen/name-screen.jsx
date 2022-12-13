@@ -5,6 +5,7 @@ import {
   Form,
   FormScreenWrapper,
   RadioButtonsWrapper,
+  BigButton,
 } from "../../shared-styles/shared-styles";
 import { TextInputLabelWrapper, MessagesWrapper } from "./styles";
 import { CustomRadioButton } from "../../components";
@@ -67,6 +68,9 @@ function NameScreen({ setPlayers, playMode, setViewingScreen }) {
             id="p1-name"
             value={playerOneName}
             onChange={(e) => setPlayerOneName(e.target.value)}
+            minLength="1"
+            maxLength="10"
+            required
           />
         </TextInputLabelWrapper>
         {playMode === modes.multi && (
@@ -76,10 +80,13 @@ function NameScreen({ setPlayers, playMode, setViewingScreen }) {
               id="p2-name"
               value={playerTwoName}
               onChange={(e) => setPlayerTwoName(e.target.value)}
+              minLength="1"
+              maxLength="10"
+              required
             />
           </TextInputLabelWrapper>
         )}
-        <RadioButtonsWrapper>
+        <RadioButtonsWrapper screen={screens.name}>
           <CustomRadioButton
             groupName="mark"
             id={marks.x}
@@ -101,7 +108,7 @@ function NameScreen({ setPlayers, playMode, setViewingScreen }) {
           <div>{p1msg()}</div>
           <div>{p2msg()}</div>
         </MessagesWrapper>
-        <button type="submit">Play</button>
+        <BigButton type="submit">Play</BigButton>
       </Form>
     </FormScreenWrapper>
   );
