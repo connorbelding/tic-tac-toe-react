@@ -28,7 +28,6 @@ const RadioButtonsWrapper = styled.div`
   ${(props) => {
     if (props.screen === screens.mode)
       return css`
-        justify-content: center;
         gap: 1.2rem;
       `;
     if (props.screen == screens.name)
@@ -41,7 +40,6 @@ const RadioButtonsWrapper = styled.div`
 
 const BigButton = styled.button`
   border: 2px solid rgba(0, 0, 0, 0.5);
-  color: rgba(0, 0, 0, 0.5);
   padding: 0.4rem 0;
   width: 100%;
   border-radius: 8px;
@@ -53,4 +51,24 @@ const BigButton = styled.button`
   color: ${colors.white};
 `;
 
-export { FormScreenWrapper, Form, CenteredMsg, BigButton, RadioButtonsWrapper };
+const TextInput = styled.input`
+  padding: 0.25rem 0.35rem;
+  font-size: 18px;
+  border-radius: 5px;
+  border: 1px solid ${colors.black};
+  transition: border 0.05s, outline 0.05s;
+  outline: 0px solid ${colors.lightBlue};
+  &:focus-visible {
+    border: 1px solid ${colors.lightBlue};
+    outline: 2px solid ${colors.lightBlue};
+  }
+`;
+
+export {
+  FormScreenWrapper,
+  Form,
+  CenteredMsg,
+  BigButton,
+  RadioButtonsWrapper,
+  TextInput,
+};
