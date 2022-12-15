@@ -6,8 +6,13 @@ import {
   FormScreenWrapper,
   RadioButtonsWrapper,
   BigButton,
+  TextInput,
 } from "../../shared-styles/shared-styles";
-import { TextInputLabelWrapper, MessagesWrapper } from "./styles";
+import {
+  TextInputLabelWrapper,
+  MarksSelectionWrapper,
+  MessageWrapper,
+} from "./styles";
 import { CustomRadioButton } from "../../components";
 
 function NameScreen({ setPlayers, playMode, setViewingScreen }) {
@@ -44,27 +49,14 @@ function NameScreen({ setPlayers, playMode, setViewingScreen }) {
     setViewingScreen(screens.game);
   }
 
-  function p1msg() {
-    if (playMode === modes.solo) return `You will be ${playerOneMark}`;
-
-    return `Player 1 will be ${playerOneMark}`;
-  }
-
-  function p2msg() {
-    if (playMode === modes.solo)
-      return `CPU will be ${playerOneMark === marks.x ? marks.o : marks.x}`;
-
-    return `Player 2 will be ${playerOneMark === marks.x ? marks.o : marks.x}`;
-  }
-
   return (
     <FormScreenWrapper>
       <Form onSubmit={handleSubmit}>
         <TextInputLabelWrapper>
           <label htmlFor="p1-name">
-            {playMode === modes.solo ? "Your name:" : "Player 1 name:"}
+            {playMode === modes.solo ? "Your name" : "Player 1 name"}
           </label>
-          <input
+          <TextInput
             id="p1-name"
             value={playerOneName}
             onChange={(e) => setPlayerOneName(e.target.value)}
@@ -75,8 +67,8 @@ function NameScreen({ setPlayers, playMode, setViewingScreen }) {
         </TextInputLabelWrapper>
         {playMode === modes.multi && (
           <TextInputLabelWrapper>
-            <label htmlFor="p2-name">Player 2 name:</label>
-            <input
+            <label htmlFor="p2-name">Player 2 name</label>
+            <TextInput
               id="p2-name"
               value={playerTwoName}
               onChange={(e) => setPlayerTwoName(e.target.value)}
@@ -86,28 +78,31 @@ function NameScreen({ setPlayers, playMode, setViewingScreen }) {
             />
           </TextInputLabelWrapper>
         )}
-        <RadioButtonsWrapper screen={screens.name}>
-          <CustomRadioButton
-            groupName="mark"
-            id={marks.x}
-            value={marks.x}
-            customButtonText="X"
-            handleInputChange={() => setPlayerOneMark(marks.x)}
-            isChecked={playerOneMark === marks.x}
-          />
-          <CustomRadioButton
-            groupName="mark"
-            id={marks.o}
-            value={marks.o}
-            customButtonText="O"
-            handleInputChange={() => setPlayerOneMark(marks.o)}
-            isChecked={playerOneMark === marks.o}
-          />
-        </RadioButtonsWrapper>
-        <MessagesWrapper>
-          <div>{p1msg()}</div>
-          <div>{p2msg()}</div>
-        </MessagesWrapper>
+        <MarksSelectionWrapper>
+          <MessageWrapper>
+            {playMode === modes.solo
+              ? "Select your mark (X goes first)"
+              : "Select player 1 mark (X goes first)"}
+          </MessageWrapper>
+          <RadioButtonsWrapper screen={screens.name}>
+            <CustomRadioButton
+              groupName="mark"
+              id={marks.x}
+              value={marks.x}
+              customButtonText="X"
+              handleInputChange={() => setPlayerOneMark(marks.x)}
+              isChecked={playerOneMark === marks.x}
+            />
+            <CustomRadioButton
+              groupName="mark"
+              id={marks.o}
+              value={marks.o}
+              customButtonText="O"
+              handleInputChange={() => setPlayerOneMark(marks.o)}
+              isChecked={playerOneMark === marks.o}
+            />
+          </RadioButtonsWrapper>
+        </MarksSelectionWrapper>
         <BigButton type="submit">Play</BigButton>
       </Form>
     </FormScreenWrapper>
