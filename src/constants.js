@@ -9,6 +9,8 @@ export const colors = {
   grey: "rgba(0, 0, 0, 0.5)",
   lightGrey: "rgba(0, 0, 0, 0.25)",
   white: "rgb(255, 255, 255)",
+  lightBlue: "rgb(77, 112, 219)",
+  pink: "rgb(224, 49, 79)",
 };
 
 export const screens = {
