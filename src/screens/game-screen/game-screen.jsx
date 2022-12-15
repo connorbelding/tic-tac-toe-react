@@ -11,6 +11,10 @@ import {
   ScoreCardName,
   ScoreCardNum,
   MarkText,
+  ReplayMessage,
+  ReplayButton,
+  ReplayButtonsWrapper,
+  QuitButton,
 } from "./styles";
 import { screens, marks } from "../../constants";
 
@@ -67,19 +71,19 @@ function GameScreen({ playMode, players, setViewingScreen }) {
         />
       </BoardWrapper>
       <QuitWrapper>
-        <button
+        <QuitButton
           onClick={() => {
             setViewingScreen(screens.mode);
           }}
         >
           Quit
-        </button>
+        </QuitButton>
       </QuitWrapper>
       {gameOver && (
         <ReplayWindow>
-          <div>Play again?</div>
-          <div>
-            <button
+          <ReplayMessage>Play again?</ReplayMessage>
+          <ReplayButtonsWrapper>
+            <ReplayButton
               type="button"
               onClick={() => {
                 setBoard([
@@ -93,16 +97,16 @@ function GameScreen({ playMode, players, setViewingScreen }) {
               }}
             >
               Yes
-            </button>
-            <button
+            </ReplayButton>
+            <ReplayButton
               type="button"
               onClick={() => {
                 setViewingScreen(screens.mode);
               }}
             >
               No
-            </button>
-          </div>
+            </ReplayButton>
+          </ReplayButtonsWrapper>
         </ReplayWindow>
       )}
     </Wrapper>

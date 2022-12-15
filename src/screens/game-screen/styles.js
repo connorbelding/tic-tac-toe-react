@@ -32,8 +32,31 @@ export const ReplayWindow = styled.form`
   background: #fff;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
   padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.52);
+`;
+
+export const ReplayMessage = styled.p`
+  font-weight: bold;
+  font-size: 1.3rem;
+  text-align: center;
+`;
+
+export const ReplayButtonsWrapper = styled.div`
+  display: flex;
+  gap: 1.3rem;
+`;
+
+export const ReplayButton = styled.button`
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  padding: 0.4rem 1.6rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 1.15rem;
+  background: ${colors.black};
+  color: ${colors.white};
 `;
 
 export const ScoreCard = styled.div`
@@ -58,4 +81,12 @@ export const ScoreCardNum = styled.div`
 
 export const MarkText = styled.span`
   color: ${(props) => (props.mark === "x" ? "red" : "blue")};
+`;
+
+export const QuitButton = styled.button`
+  background: ${colors.pink};
+  padding: 0.4rem 1.4rem;
+  font-size: 1.15rem;
+  font-weight: 500;
+  border-radius: 8px;
 `;
