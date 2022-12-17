@@ -18,7 +18,14 @@ const Form = styled.form`
 `;
 
 const CenteredMsg = styled.p`
-  font-size: ${(props) => `${props.fontSize}`};
+  ${(props) =>
+    props.size === "lg"
+      ? css`
+          font-size: 1.45rem;
+        `
+      : css`
+          font-size: 1.15rem;
+        `};
   text-align: center;
   font-weight: 500;
 `;
@@ -29,6 +36,9 @@ const RadioButtonsWrapper = styled.div`
     if (props.screen === screens.mode)
       return css`
         gap: 1.2rem;
+        @media (max-width: 450px) {
+          flex-direction: column;
+        }
       `;
     if (props.screen == screens.name)
       return css`
@@ -58,6 +68,8 @@ const TextInput = styled.input`
   border: 1px solid ${colors.black};
   transition: border 0.05s, outline 0.05s;
   outline: 0px solid ${colors.lightBlue};
+  width: 100%;
+  min-width: 200px;
   &:focus-visible {
     border: 1px solid ${colors.lightBlue};
     outline: 2px solid ${colors.lightBlue};
