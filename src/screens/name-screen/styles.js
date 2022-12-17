@@ -18,7 +18,3 @@ export const MarksSelectionWrapper = styled.div`
   gap: 0.25rem;
   margin: 0.9rem 0 0 0;
 `;
-
-export const MessageWrapper = styled.div`
-  font-weight: 500;
-`;
