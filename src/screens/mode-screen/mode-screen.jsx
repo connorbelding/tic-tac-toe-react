@@ -26,7 +26,7 @@ function ModeScreen({ setPlayMode, setViewingScreen }) {
   return (
     <FormScreenWrapper>
       <Form onSubmit={handleSubmit}>
-        <CenteredMsg fontSize="1.45rem">Select mode</CenteredMsg>
+        <CenteredMsg size='lg'>Select mode</CenteredMsg>
         <RadioButtonsWrapper screen={screens.mode}>
           <CustomRadioButton
             id={modes.solo}
@@ -35,6 +35,7 @@ function ModeScreen({ setPlayMode, setViewingScreen }) {
             customButtonText="Solo (VS AI)"
             handleInputChange={handleInputChange}
             isChecked={selectedMode === modes.solo}
+            screen={screens.mode}
           />
           <CustomRadioButton
             id={modes.multi}
@@ -43,6 +44,7 @@ function ModeScreen({ setPlayMode, setViewingScreen }) {
             customButtonText="Multiplayer"
             handleInputChange={handleInputChange}
             isChecked={selectedMode === modes.multi}
+            screen={screens.mode}
           />
         </RadioButtonsWrapper>
         <BigButton type="submit">Next</BigButton>

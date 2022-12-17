@@ -7,12 +7,9 @@ import {
   RadioButtonsWrapper,
   BigButton,
   TextInput,
+  CenteredMsg,
 } from "../../shared-styles/shared-styles";
-import {
-  TextInputLabelWrapper,
-  MarksSelectionWrapper,
-  MessageWrapper,
-} from "./styles";
+import { TextInputLabelWrapper, MarksSelectionWrapper } from "./styles";
 import { CustomRadioButton } from "../../components";
 
 function NameScreen({ setPlayers, playMode, setViewingScreen }) {
@@ -79,11 +76,11 @@ function NameScreen({ setPlayers, playMode, setViewingScreen }) {
           </TextInputLabelWrapper>
         )}
         <MarksSelectionWrapper>
-          <MessageWrapper>
+          <CenteredMsg>
             {playMode === modes.solo
-              ? "Select your mark (X goes first)"
-              : "Select player 1 mark (X goes first)"}
-          </MessageWrapper>
+              ? "Select your mark"
+              : "Select player 1 mark"}
+          </CenteredMsg>
           <RadioButtonsWrapper screen={screens.name}>
             <CustomRadioButton
               groupName="mark"
@@ -92,6 +89,7 @@ function NameScreen({ setPlayers, playMode, setViewingScreen }) {
               customButtonText="X"
               handleInputChange={() => setPlayerOneMark(marks.x)}
               isChecked={playerOneMark === marks.x}
+              screen={screens.name}
             />
             <CustomRadioButton
               groupName="mark"
@@ -100,6 +98,7 @@ function NameScreen({ setPlayers, playMode, setViewingScreen }) {
               customButtonText="O"
               handleInputChange={() => setPlayerOneMark(marks.o)}
               isChecked={playerOneMark === marks.o}
+              screen={screens.name}
             />
           </RadioButtonsWrapper>
         </MarksSelectionWrapper>

@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { colors } from "../../constants";
+import { colors, screens } from "../../constants";
 
 export const RadioButtonWrapper = styled.div`
   & label,
@@ -13,11 +13,20 @@ export const RadioButtonWrapper = styled.div`
 `;
 
 export const RadioButton = styled.button`
-  padding: 0.4rem 0.7rem;
   border-radius: 8px;
   user-select: none;
   font-weight: 500;
   font-size: 1.15rem;
+  ${(props) =>
+    props.screen === screens.mode
+      ? css`
+          font-size: 1.15rem;
+          padding: 0.4rem 0.7rem;
+        `
+      : css`
+          font-size: 1.8rem;
+          padding: 0.5rem 0.9rem;
+        `}
   ${(props) =>
     props.isSelected
       ? css`

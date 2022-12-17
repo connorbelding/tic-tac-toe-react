@@ -9,6 +9,7 @@ function CustomRadioButton({
   customButtonText,
   handleInputChange,
   isChecked,
+  screen,
 }) {
   const inputRef = useRef();
 
@@ -32,6 +33,7 @@ function CustomRadioButton({
         type="button"
         isSelected={isChecked}
         onClick={handleCustomButtonClick}
+        screen={screen}
       >
         {customButtonText}
       </RadioButton>
@@ -46,6 +48,7 @@ CustomRadioButton.propTypes = {
   customButtonText: propTypes.string.isRequired,
   handleInputChange: propTypes.func.isRequired,
   isChecked: propTypes.bool.isRequired,
+  screen: propTypes.string.isRequired,
 };
 
 export default CustomRadioButton;
